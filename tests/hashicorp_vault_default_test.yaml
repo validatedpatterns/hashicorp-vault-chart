@@ -1,0 +1,32 @@
+suite: Test hashicorp app with default values
+templates:
+  - templates/vault-app.yaml
+release:
+  name: release-test
+tests:
+  - it: Should output default values
+    set:
+      global:
+        localClusterDomain: apps.bar.baz
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: ConsoleLink
+      - equal:
+          path: spec.href
+          value: "https://vault-vault.apps.bar.baz"
+
+  - it: Should output hub href when localclusterdomain is unset
+    set:
+      global:
+        localClusterDomain: null
+        hubClusterDomain: apps.hub.bar
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: ConsoleLink
+      - equal:
+          path: spec.href
+          value: "https://vault-vault.apps.hub.bar"
