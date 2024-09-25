@@ -1,17 +1,27 @@
 ---
+# -- The global namespace containes some globally used variables used in patterns
+# @default -- depends on the individual settings
 global:
+  # -- Setting the enforces openshift templates for the vault chart
   openshift: true
+  # -- The DNS entry for the cluster the chart is being rendered on with the apps. prefix
   localClusterDomain: apps.foo.cluster.com
 
+# -- A number of settings passed down to the vault subchart
+# @default -- depends on the individual settings
 vault:
   injector:
+    # -- Vault agent injection support
     enabled: false
   ui:
+    # -- Vault UI support
     enabled: true
   server:
+    # -- Additional environment variables injected in the vault pod
     extraEnvironmentVars:
       VAULT_CACERT: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
       VAULT_ADDR: https://vault.vault.svc.cluster.local:8200
+    # -- Base configuration for the standalone vault server
     standalone:
       config: |
         ui = true
@@ -25,27 +35,34 @@ vault:
           path = "/vault/data"
         }
 
-    # These are automatically mounted in /vault/userconfig/<name>
+    # -- Extra volumes that are automatically mounted in the vault pod under /vault/userconfig/<name>
     extraVolumes:
     - type: secret
       name: vault-secret
 
     service:
+      # -- Enables an associated k8s service when running the vault
       enabled: true
       nonha:
+        # -- Annotation to inject a secret called `vault-secret` to the nonha service
         annotations:
           service.beta.openshift.io/serving-cert-secret-name: vault-secret
       internal:
+        # -- Annotation to inject a secret called `vault-secret` to the internal service
         annotations:
           service.beta.openshift.io/serving-cert-secret-name: vault-secret-internal
     route:
       host: null
+      # -- Enable route support when exposing the vault
       enabled: true
       tls:
         # We cannot use passthrough because you'd be talking to
         # https://vault-vault.apps.mcg-hub.blueprints.rhecoeng.com but you'd
         # get vault.vault.svc/vault.vault.svc.cluster.local
+        # -- Termination type of the vault route
         termination: "reencrypt"
     image:
+      # -- Where to fetch the vault images from
       repository: "registry.connect.redhat.com/hashicorp/vault"
+      # -- Tag to use for the vault image
       tag: "1.17.3-ubi"
