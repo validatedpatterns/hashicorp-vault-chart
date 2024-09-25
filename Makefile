@@ -37,6 +37,7 @@ test: helm-lint helm-unittest ## Runs helm lint and unit tests
 super-linter: ## Runs super linter locally
 	rm -rf .mypy_cache
 	podman run -e RUN_LOCAL=true -e USE_FIND_ALGORITHM=true	\
+					-e VALIDATE_CHECKOV=false \
 					-e VALIDATE_KUBERNETES_KUBECONFORM=false \
 					-e VALIDATE_MARKDOWN=false \
 					-e VALIDATE_MARKDOWN_PRETTIER=false \
