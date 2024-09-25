@@ -4,7 +4,12 @@ keywords:
 - pattern
 name: hashicorp-vault
 version: 0.1.2
+home: https://github.com/validatedpatterns/hashicorp-vault-chart
 dependencies:
   - name: vault
     version: "0.28.1"
     repository: "https://helm.releases.hashicorp.com"
+maintainers:
+  - name: Validated Patterns Team
+    email: validatedpatterns@googlegroups.com
+icon: https://validatedpatterns.io/images/validated-patterns.png
