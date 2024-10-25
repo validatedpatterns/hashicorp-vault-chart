@@ -1,0 +1,15 @@
+suite: Test hashicorp app with default values
+templates:
+  - charts/vault/templates/server-statefulset.yaml
+release:
+  name: release-test
+tests:
+  - it: Should output vault image
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: StatefulSet
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "registry.connect.redhat.com/hashicorp/vault:1.18.0-ubi"
