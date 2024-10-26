@@ -1,10 +1,18 @@
 # hashicorp-vault
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square)
 
 A Helm chart to configure Hashicorp's vault.
 
 This chart is used by the Validated Patterns installation script that can be found [here](https://github.com/validatedpatterns/common/blob/main/scripts/pattern-util.sh)
+
+**Homepage:** <https://github.com/validatedpatterns/hashicorp-vault-chart>
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| Validated Patterns Team | <validatedpatterns@googlegroups.com> |  |
 
 ## Requirements
 
@@ -24,7 +32,7 @@ This chart is used by the Validated Patterns installation script that can be fou
 | vault.server.extraEnvironmentVars | object | `{"VAULT_ADDR":"https://vault.vault.svc.cluster.local:8200","VAULT_CACERT":"/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"}` | Additional environment variables injected in the vault pod |
 | vault.server.extraVolumes | list | `[{"name":"vault-secret","type":"secret"}]` | Extra volumes that are automatically mounted in the vault pod under /vault/userconfig/<name> |
 | vault.server.image.repository | string | `"registry.connect.redhat.com/hashicorp/vault"` | Where to fetch the vault images from |
-| vault.server.image.tag | string | `"1.17.3-ubi"` | Tag to use for the vault image |
+| vault.server.image.tag | string | `"1.18.0-ubi"` | Tag to use for the vault image |
 | vault.server.route.enabled | bool | `true` | Enable route support when exposing the vault |
 | vault.server.route.tls.termination | string | `"reencrypt"` | Termination type of the vault route |
 | vault.server.service.enabled | bool | `true` | Enables an associated k8s service when running the vault |
