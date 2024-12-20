@@ -32,7 +32,7 @@ This chart is used by the Validated Patterns installation script that can be fou
 | vault.server.extraEnvironmentVars | object | `{"VAULT_ADDR":"https://vault.vault.svc.cluster.local:8200","VAULT_CACERT":"/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"}` | Additional environment variables injected in the vault pod |
 | vault.server.extraVolumes | list | `[{"name":"vault-secret","type":"secret"}]` | Extra volumes that are automatically mounted in the vault pod under /vault/userconfig/<name> |
 | vault.server.image.repository | string | `"registry.connect.redhat.com/hashicorp/vault"` | Where to fetch the vault images from |
-| vault.server.image.tag | string | `"1.18.0-ubi"` | Tag to use for the vault image |
+| vault.server.image.tag | string | `"1.18.3-ubi"` | Tag to use for the vault image |
 | vault.server.route.enabled | bool | `true` | Enable route support when exposing the vault |
 | vault.server.route.tls.termination | string | `"reencrypt"` | Termination type of the vault route |
 | vault.server.service.enabled | bool | `true` | Enables an associated k8s service when running the vault |
