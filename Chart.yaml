@@ -3,7 +3,7 @@ description: A Helm chart to configure Hashicorp's vault.
 keywords:
 - pattern
 name: hashicorp-vault
-version: 0.1.4
+version: 0.1.5
 home: https://github.com/validatedpatterns/hashicorp-vault-chart
 dependencies:
   - name: vault
