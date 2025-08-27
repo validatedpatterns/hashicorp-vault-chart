@@ -65,4 +65,4 @@ vault:
       # -- Where to fetch the vault images from
       repository: "registry.connect.redhat.com/hashicorp/vault"
       # -- Tag to use for the vault image
-      tag: "1.18.3-ubi"
+      tag: "1.20.2-ubi"

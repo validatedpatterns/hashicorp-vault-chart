@@ -12,4 +12,4 @@ tests:
           of: StatefulSet
       - equal:
           path: spec.template.spec.containers[0].image
-          value: "registry.connect.redhat.com/hashicorp/vault:1.18.3-ubi"
+          value: "registry.connect.redhat.com/hashicorp/vault:1.20.2-ubi"
