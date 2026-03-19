@@ -1,10 +1,12 @@
-diff -up vault/templates/_helpers.tpl.0.26.1 vault/templates/_helpers.tpl
---- vault/templates/_helpers.tpl.0.26.1	2023-11-07 14:06:52.285821136 +0100
-+++ vault/templates/_helpers.tpl	2023-11-07 14:07:45.445038627 +0100
-@@ -738,6 +738,35 @@ Sets extra vault server Service annotati
+diff --git a/templates/_helpers.tpl b/templates/_helpers.tpl
+index ab32311..392af0b 100644
+--- a/templates/_helpers.tpl
++++ b/templates/_helpers.tpl
+@@ -746,6 +746,35 @@ Sets extra vault server Service annotations
+   {{- end }}
  {{- end -}}
  
- {{/*
++{{/*
 +Sets extra vault server Service internal annotations
 +*/}}
 +{{- define "vault.service.internal.annotations" -}}
@@ -33,13 +35,13 @@ diff -up vault/templates/_helpers.tpl.0.26.1 vault/templates/_helpers.tpl
 +  {{- end }}
 +{{- end -}}
 +
-+{{/*
+ {{/*
  Sets PodSecurityPolicy annotations
  */}}
- {{- define "vault.psp.annotations" -}}
-diff -up vault/templates/server-headless-service.yaml.0.26.1 vault/templates/server-headless-service.yaml
---- vault/templates/server-headless-service.yaml.0.26.1	2023-11-07 14:08:24.302197609 +0100
-+++ vault/templates/server-headless-service.yaml	2023-11-07 14:08:48.707297472 +0100
+diff --git a/templates/server-headless-service.yaml b/templates/server-headless-service.yaml
+index 8db49d1..2fde1ac 100644
+--- a/templates/server-headless-service.yaml
++++ b/templates/server-headless-service.yaml
 @@ -21,6 +21,7 @@ metadata:
      vault-internal: "true"
    annotations:
@@ -48,23 +50,25 @@ diff -up vault/templates/server-headless-service.yaml.0.26.1 vault/templates/ser
  spec:
    {{- if (semverCompare ">= 1.23-0" .Capabilities.KubeVersion.Version) }}
    {{- if .Values.server.service.ipFamilyPolicy }}
-diff -up vault/templates/server-service.yaml.0.26.1 vault/templates/server-service.yaml
---- vault/templates/server-service.yaml.0.26.1	2023-11-07 14:09:43.152520231 +0100
-+++ vault/templates/server-service.yaml	2023-11-07 14:09:55.406570360 +0100
+diff --git a/templates/server-service.yaml b/templates/server-service.yaml
+index 7dac6da..89a2405 100644
+--- a/templates/server-service.yaml
++++ b/templates/server-service.yaml
 @@ -20,6 +20,7 @@ metadata:
      app.kubernetes.io/managed-by: {{ .Release.Service }}
    annotations:
  {{ template "vault.service.annotations" .}}
 +{{ template "vault.service.nonha.annotations" .}}
- spec:
-   {{- if .Values.server.service.type}}
-   type: {{ .Values.server.service.type }}
-diff -up vault/values.schema.json.0.26.1 vault/values.schema.json
---- vault/values.schema.json.0.26.1	2023-11-07 14:10:35.177733085 +0100
-+++ vault/values.schema.json	2023-11-07 14:11:52.244048399 +0100
-@@ -931,6 +931,28 @@
-                                 }
-                             }
+ {{- if and .Values.global.openshift .Values.server.serviceCA.enabled }}
+     service.beta.openshift.io/serving-cert-secret-name: {{ .Values.server.serviceCA.secretName | quote }}
+ {{- end }}
+diff --git a/values.schema.json b/values.schema.json
+index dfb4346..bae355e 100644
+--- a/values.schema.json
++++ b/values.schema.json
+@@ -1083,6 +1083,28 @@
+                                 "string"
+                             ]
                          },
 +                        "internal": {
 +                            "type": "object",
@@ -88,13 +92,14 @@ diff -up vault/values.schema.json.0.26.1 vault/values.schema.json
 +                                }
 +                            }
 +                        },
-                         "annotations": {
-                             "type": [
-                                 "object",
-diff -up vault/values.yaml.0.26.1 vault/values.yaml
---- vault/values.yaml.0.26.1	2023-11-07 14:13:00.865329166 +0100
-+++ vault/values.yaml	2023-11-07 14:14:15.318633813 +0100
-@@ -673,6 +673,19 @@ server:
+                         "enabled": {
+                             "type": "boolean"
+                         },
+diff --git a/values.yaml b/values.yaml
+index 287ef8b..9ef6448 100644
+--- a/values.yaml
++++ b/values.yaml
+@@ -746,6 +746,19 @@ server:
        # YAML-formatted multi-line templated string map of the annotations to apply
        # to the standby service.
        annotations: {}
