@@ -1,5 +1,5 @@
 ---
-# -- The global namespace containes some globally used variables used in patterns
+# -- The global namespace contains some globally used variables used in patterns
 # @default -- depends on the individual settings
 global:
   # -- Setting the enforces openshift templates for the vault chart
