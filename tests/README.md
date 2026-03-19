@@ -22,7 +22,7 @@ helm plugin install https://github.com/helm-unittest/helm-unittest.git
 helm unittest .
 ```
 
-## Run unittests with docker
+## Run unittests with Docker
 ```bash
 docker run -ti --rm -v $(pwd):/apps:z helmunittest/helm-unittest .
 ```
