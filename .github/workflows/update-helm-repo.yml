@@ -26,5 +26,6 @@ jobs:
   update-helm-repo:
     needs: [helmlint]
     uses: validatedpatterns/helm-charts/.github/workflows/update-helm-repo.yml@985ba37e0eb50b1b35ec194fc999eae2d0ae1486
-    permissions: read-all
-    secrets: inherit
+    permissions:
+      contents: read
+    secrets: inherit # zizmor: ignore[secrets-inherit]
