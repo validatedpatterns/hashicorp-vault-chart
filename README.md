@@ -18,7 +18,7 @@ This chart is used by the Validated Patterns installation script that can be fou
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.releases.hashicorp.com | vault | 0.32.0 |
+| <https://helm.releases.hashicorp.com> | vault | 0.32.0 |
 
 ## Values
 
@@ -82,5 +82,4 @@ This is why we set the following in the values files:
 Make sure to run "./update-helm-dependency.sh" after you updated the subchart
 (by calling helm dependency update .)
 
-We can drop this local patch once upstream fixes the bug (which would need reopining, discuss
-and fixing)
+We can drop this local patch once upstream merges <https://www.github.com/hashicorp/vault-helm/pull/1179>
