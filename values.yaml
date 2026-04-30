@@ -7,6 +7,15 @@ global:
   # -- The DNS entry for the cluster the chart is being rendered on with the apps. prefix
   localClusterDomain: apps.foo.cluster.com
 
+# -- Default-deny NetworkPolicy for the vault namespace
+# When enabled, deploys a namespace-wide NetworkPolicy that blocks all ingress and
+# egress for pods without an explicit allow policy. Patterns that need zero-trust
+# network isolation should enable this and provide per-pod allow rules via
+# vault.server.networkPolicy.
+# @default -- false
+defaultDenyNetworkPolicy:
+  enabled: false
+
 # -- A number of settings passed down to the vault subchart
 # @default -- depends on the individual settings
 vault:
