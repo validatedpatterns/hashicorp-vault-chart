@@ -1,6 +1,6 @@
 # hashicorp-vault
 
-![Version: 0.1.7](https://img.shields.io/badge/Version-0.1.7-informational?style=flat-square)
+![Version: 0.1.8](https://img.shields.io/badge/Version-0.1.8-informational?style=flat-square)
 
 A Helm chart to configure Hashicorp's vault.
 
@@ -24,6 +24,7 @@ This chart is used by the Validated Patterns installation script that can be fou
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| defaultDenyNetworkPolicy | object | false | Default-deny NetworkPolicy for the vault namespace When enabled, deploys a namespace-wide NetworkPolicy that blocks all ingress and egress for pods without an explicit allow policy. Patterns that need zero-trust network isolation should enable this and provide per-pod allow rules via vault.server.networkPolicy. |
 | global | object | depends on the individual settings | The global namespace contains some globally used variables used in patterns |
 | global.localClusterDomain | string | `"apps.foo.cluster.com"` | The DNS entry for the cluster the chart is being rendered on with the apps. prefix |
 | global.openshift | bool | `true` | Setting the enforces openshift templates for the vault chart |
@@ -82,4 +83,5 @@ This is why we set the following in the values files:
 Make sure to run "./update-helm-dependency.sh" after you updated the subchart
 (by calling helm dependency update .)
 
-We can drop this local patch once upstream merges <https://www.github.com/hashicorp/vault-helm/pull/1179>
+We can drop this local patch once upstream fixes the bug (which would need reopining, discuss
+and fixing)
