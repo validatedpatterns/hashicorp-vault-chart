@@ -19,6 +19,60 @@ This chart is used by the Validated Patterns installation script that can be fou
 
 {{ template "helm-docs.versionFooter" . }}
 
+## Network Policies
+
+This chart supports deploying Kubernetes NetworkPolicies for network isolation
+in the vault namespace. Two layers are available:
+
+### Default-deny policy
+
+A namespace-wide default-deny NetworkPolicy that blocks all ingress and egress
+traffic for every pod in the vault namespace unless an explicit allow policy
+exists. Enable it by setting:
+
+```yaml
+defaultDenyNetworkPolicy:
+  enabled: true
+```
+
+### Per-pod allow rules
+
+The upstream vault subchart includes a `vault.server.networkPolicy` value that
+lets you define fine-grained ingress and egress rules for vault server pods.
+When combined with the default-deny policy above, only explicitly allowed
+traffic can reach or leave vault.
+
+Example — allow ingress from a specific namespace and egress to DNS:
+
+```yaml
+vault:
+  server:
+    networkPolicy:
+      enabled: true
+      ingress:
+        - ports:
+          - protocol: TCP
+            port: 8200
+          from:
+          - namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: my-app
+      egress:
+        - ports:
+          - protocol: UDP
+            port: 5353
+          - protocol: TCP
+            port: 5353
+          to:
+          - namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: openshift-dns
+```
+
+Patterns can supply these values via `extraValueFiles` in their
+`values-hub.yaml` to keep network policy configuration separate from the main
+chart values.
+
 ## Updating the chart
 
 1. Edit Chart.yaml with the new version
