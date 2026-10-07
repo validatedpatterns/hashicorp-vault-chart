@@ -23,12 +23,12 @@ permissions:
 
 jobs:
   helmlint:
-    uses: validatedpatterns/helm-charts/.github/workflows/helmlint.yml@workflow-stable # zizmor: ignore[unpinned-uses]
+    uses: validatedpatterns/helm-charts/.github/workflows/helmlint.yml@985ba37e0eb50b1b35ec194fc999eae2d0ae1486 # zizmor: ignore[unpinned-uses]
     permissions:
       contents: read
 
   update-helm-repo:
     needs: [helmlint]
-    uses: validatedpatterns/helm-charts/.github/workflows/update-helm-repo.yml@workflow-stable # zizmor: ignore[unpinned-uses]
+    uses: validatedpatterns/helm-charts/.github/workflows/update-helm-repo.yml@985ba37e0eb50b1b35ec194fc999eae2d0ae1486 # zizmor: ignore[unpinned-uses]
     permissions: read-all # zizmor: ignore[excessive-permissions]
     secrets: inherit # zizmor: ignore[secrets-inherit]
