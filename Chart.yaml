@@ -9,6 +9,7 @@ dependencies:
   - name: vault
     version: "0.32.0"
     repository: "https://helm.releases.hashicorp.com"
+    #repository: file://charts/vault
 maintainers:
   - name: Validated Patterns Team
     email: validatedpatterns@googlegroups.com
