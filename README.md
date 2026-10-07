@@ -1,6 +1,6 @@
 # hashicorp-vault
 
-![Version: 0.1.9](https://img.shields.io/badge/Version-0.1.9-informational?style=flat-square)
+![Version: 0.1.10](https://img.shields.io/badge/Version-0.1.10-informational?style=flat-square)
 
 A Helm chart to configure Hashicorp's vault.
 
@@ -12,18 +12,18 @@ This chart is used by the Validated Patterns installation script that can be fou
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Validated Patterns Team | <validatedpatterns@googlegroups.com> | |
+| Validated Patterns Team | <validatedpatterns@googlegroups.com> |  |
 
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| <https://helm.releases.hashicorp.com> | vault | 0.32.0 |
+| file://charts/vault | vault | 0.32.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
-| ----- | ------ | --------- | ------------- |
+|-----|------|---------|-------------|
 | defaultDenyNetworkPolicy | object | false | Default-deny NetworkPolicy for the vault namespace When enabled, deploys a namespace-wide NetworkPolicy that blocks all ingress and egress for pods without an explicit allow policy. Patterns that need zero-trust network isolation should enable this and provide per-pod allow rules via vault.server.networkPolicy. |
 | global | object | depends on the individual settings | The global namespace contains some globally used variables used in patterns |
 | global.localClusterDomain | string | `"apps.foo.cluster.com"` | The DNS entry for the cluster the chart is being rendered on with the apps. prefix |
@@ -109,16 +109,16 @@ chart values.
 
 ## Patches
 
-### Issue 674
+### Per-Service Annotation Issue
 
 In order to be able to use vault SSL we need to patch the helm chart to fix
-upstream issue 674. Basically a single annotation for both internal service and
-non-internal service is a problem because the annotations in the service
-section are applied to both the vault and the vault-internal services and there
-is not way to distinguish between the two. When deploying to OpenShift and the
-annotation is used to request a certificate, this causes a race condition
-because two services are trying to modify the same secret (containing the
-certificate)
+upstream issue 674 (which was only fixeed partially). Basically a single
+annotation for both internal service and non-internal service is a problem
+because the annotations in the service section are applied to both the vault
+and the vault-internal services and there is not way to distinguish between the
+two. When deploying to OpenShift and the annotation is used to request a
+certificate, this causes a race condition because two services are trying to
+modify the same secret (containing the certificate)
 
 This is why we set the following in the values files:
 
@@ -133,8 +133,15 @@ This is why we set the following in the values files:
       service.beta.openshift.io/serving-cert-secret-name: vault-secret-internal
 ```
 
+Currently our PR fixing this is waiting at <https://www.github.com/hashicorp/vault-helm/pull/1179>
+
 Make sure to run "./update-helm-dependency.sh" after you updated the subchart
 (by calling helm dependency update .)
 
-We can drop this local patch once upstream fixes the bug (which would need reopining, discuss
-and fixing)
+### Helm 4 null sub-keys breakage
+
+Helm 4 re-introduced broken behaviour when the wrapper charts sets a subchart's value to `null`
+The upstream issue is <https://www.github.com/helm/helm/issues/32522> Until that is fixed
+and the fix trickles down to argo, we need to ship this workaround
+
+We can drop these local patches once upstream fixes the bugs
