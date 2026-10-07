@@ -24,6 +24,6 @@ for i in ../../local-patches/*.patch; do
 done
 find . -type f -iname '*.orig' -exec rm -f "{}" \;
 popd
-tar cvfz "${TAR}" "${NAME}"
-rm -rf "${NAME}"
+#tar cvfz "${TAR}" "${NAME}"
+#rm -rf "${NAME}"
 popd

@@ -1,6 +1,6 @@
 dependencies:
 - name: vault
-  repository: https://helm.releases.hashicorp.com
+  repository: file://charts/vault
   version: 0.32.0
-digest: sha256:8f38c7f500dce4ef2b99662188584236f0bfc6c67691d76e8bedecc24219f516
-generated: "2026-03-19T15:51:56.483446574+01:00"
+digest: sha256:b87033a7c9892af3d874979e57829aefc1f18dc58f2c0e4b786de37a2519c300
+generated: "2026-10-07T18:48:39.948809231+02:00"
