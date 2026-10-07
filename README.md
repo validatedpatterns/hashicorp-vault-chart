@@ -12,18 +12,18 @@ This chart is used by the Validated Patterns installation script that can be fou
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Validated Patterns Team | <validatedpatterns@googlegroups.com> |  |
+| Validated Patterns Team | <validatedpatterns@googlegroups.com> | |
 
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.releases.hashicorp.com | vault | 0.32.0 |
+| <https://helm.releases.hashicorp.com> | vault | 0.32.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
-|-----|------|---------|-------------|
+| ----- | ------ | --------- | ------------- |
 | defaultDenyNetworkPolicy | object | false | Default-deny NetworkPolicy for the vault namespace When enabled, deploys a namespace-wide NetworkPolicy that blocks all ingress and egress for pods without an explicit allow policy. Patterns that need zero-trust network isolation should enable this and provide per-pod allow rules via vault.server.networkPolicy. |
 | global | object | depends on the individual settings | The global namespace contains some globally used variables used in patterns |
 | global.localClusterDomain | string | `"apps.foo.cluster.com"` | The DNS entry for the cluster the chart is being rendered on with the apps. prefix |
@@ -111,7 +111,7 @@ chart values.
 
 ### Issue 674
 
-In order to be able to use vault ssl we need to patch the helm chart to fix
+In order to be able to use vault SSL we need to patch the helm chart to fix
 upstream issue 674. Basically a single annotation for both internal service and
 non-internal service is a problem because the annotations in the service
 section are applied to both the vault and the vault-internal services and there
