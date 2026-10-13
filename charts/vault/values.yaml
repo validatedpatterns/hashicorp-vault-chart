@@ -1,4 +1,4 @@
-# Copyright IBM Corp. 2018, 2025
+# Copyright IBM Corp. 2018, 2026
 # SPDX-License-Identifier: MPL-2.0
 
 # Available parameters and their default values for the Vault chart.
@@ -68,7 +68,7 @@ injector:
   # image sets the repo and tag of the vault-k8s image to use for the injector.
   image:
     repository: "hashicorp/vault-k8s"
-    tag: "1.7.2"
+    tag: "1.7.6"
     pullPolicy: IfNotPresent
 
   # agentImage sets the repo and tag of the Vault image to use for the Vault Agent
@@ -76,7 +76,7 @@ injector:
   # required.
   agentImage:
     repository: "hashicorp/vault"
-    tag: "1.21.2"
+    tag: "2.0.4"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
@@ -417,7 +417,7 @@ server:
 
   image:
     repository: "hashicorp/vault"
-    tag: "1.21.2"
+    tag: "2.0.4"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 
@@ -487,6 +487,31 @@ server:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+
+  httproute:
+    enabled: false
+    labels: {}
+    annotations: {}
+
+    activeService: true
+    
+    hostnames: []
+      # - host-example
+     
+    # Keep in mind parentRefs field is required
+    parentRefs: [] 
+      # - name: vault-gateway-example
+      #   namespace: example-ns
+    
+    matches:
+      - path:
+          type: PathPrefix
+          value: /
+    ## Filters define the filters that are applied to requests that match this rule.
+    filters: []
+
+    ## Additional custom rules that can be added to the route
+    additionalRules: []
 
   # hostAliases is a list of aliases to be added to /etc/hosts. Specified as a YAML list.
   hostAliases: []
@@ -963,6 +988,25 @@ server:
       # Set the Node Raft ID to the name of the pod
       setNodeId: false
 
+      # Vault Enterprise Redundancy Zones
+      # Enables automatic zone detection for Vault Enterprise autopilot redundancy zones.
+      # Requires:
+      #   - Kubernetes 1.35+ (PodTopologyLabelsAdmission enabled by default)
+      #   - Vault Enterprise
+      #   - server.ha.enabled=true and server.ha.raft.enabled=true
+      #   - Nodes labeled with topology.kubernetes.io/zone
+      #   - VAULT_REDUNDANCY_ZONE placeholder in server.ha.raft.config
+      #   - server.topologySpreadConstraints with topology.kubernetes.io/zone (optional but recommended for proper zone separation)
+      # When enabled:
+      #   - The zone label from the node is exposed as VAULT_REDUNDANCY_ZONE
+      #     environment variable and substituted into the raft config.
+      #   - The PDB maxUnavailable defaults to 1 (instead of ⌊(n-1)/2⌋) because
+      #     the PDB cannot distinguish voting from non-voting pods. Override with
+      #     server.ha.disruptionBudget.maxUnavailable if needed.
+      # See: https://developer.hashicorp.com/vault/docs/enterprise/redundancy-zones
+      redundancyZones:
+        enabled: false
+
       # Note: Configuration files are stored in ConfigMaps so sensitive data
       # such as passwords should be either mounted through extraSecretEnvironmentVars
       # or through a Kube secret.  For more information see:
@@ -983,6 +1027,8 @@ server:
 
         storage "raft" {
           path = "/vault/data"
+          # Uncomment for Vault Enterprise redundancy zones (requires server.ha.raft.redundancyZones.enabled = true)
+          # autopilot_redundancy_zone = "VAULT_REDUNDANCY_ZONE"
         }
 
         service_registration "kubernetes" {}
@@ -1033,8 +1079,9 @@ server:
     disruptionBudget:
       enabled: true
 
-    # maxUnavailable will default to (n/2)-1 where n is the number of
-    # replicas. If you'd like a custom value, you can specify an override here.
+    # maxUnavailable will default to ⌊(n-1)/2⌋ (equivalently, ceil(n/2)-1) where
+    # n is the number of replicas. If you'd like a custom value, you can specify
+    # an override here.
       maxUnavailable: null
 
   # Definition of the serviceAccount used to run Vault.
@@ -1154,7 +1201,7 @@ csi:
 
   image:
     repository: "hashicorp/vault-csi-provider"
-    tag: "1.7.0"
+    tag: "1.7.4"
     pullPolicy: IfNotPresent
 
   # volumes is a list of volumes made available to all containers. These are rendered
@@ -1245,7 +1292,7 @@ csi:
 
     image:
       repository: "hashicorp/vault"
-      tag: "1.21.2"
+      tag: "2.0.4"
       pullPolicy: IfNotPresent
 
     logFormat: standard
