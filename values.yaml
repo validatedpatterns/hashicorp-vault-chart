@@ -76,3 +76,5 @@ vault:
       # -- Tag to use for the vault image
       tag: "2.1.2-ubi"
       #tag: "1.21.4-ubi"
+    # https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+    updateStrategyType: "RollingUpdate"
