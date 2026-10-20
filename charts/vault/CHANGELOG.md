@@ -1,4 +1,50 @@
-## Unreleased
+## 0.34.1 (August 13, 2026)
+
+Changes:
+
+* Default `vault` version updated to v2.0.4
+* Default `vault-csi-provider` version updated to v1.7.4
+* Default `vault-k8s` version updated to v1.7.6
+* Tested with Vault v2.0.4, v1.21.9, v1.20.14, v1.19.20
+* build(deps): bump actions/setup-go from 6.5.0 to 7.0.0 [#1198](https://github.com/hashicorp/vault-helm/pull/1198)
+
+Bug Fixes:
+
+* Fix `defaultMode` for license secret volume rendered as octal literal `0440` — changed to decimal `288` to ensure compatibility with `python-yq` >= 4.0.0 [#1203](https://github.com/hashicorp/vault-helm/pull/1203)
+
+## 0.34.0 (July 2, 2026)
+
+Changes:
+
+* Default `vault` version updated to v2.0.3
+* Default `vault-csi-provider` version updated to v1.7.3
+* Default `vault-k8s` version updated to v1.7.5
+* Tested with Vault v2.0.3, v1.21-v1.19
+* build(deps): bump actions/checkout from 6.0.3 to 7.0.0 in the github-actions-breaking group across 1 directory [#1142](https://github.com/hashicorp/vault-helm/pull/1142)
+* build(deps): bump actions/setup-go from 6.4.0 to 6.5.0
+
+Features:
+
+* Add support for Kubernetes Gateway API HTTPRoute resource [#1142](https://github.com/hashicorp/vault-helm/pull/1142)
+
+## 0.33.0 (June 8, 2026)
+
+Changes:
+
+* Default `vault` version updated to v2.0.2
+* Default `vault-csi-provider` version updated to v1.7.2
+* Default `vault-k8s` version updated to v1.7.4
+* Tested with Vault v2.0.2, v1.21-v1.19
+* Tested with Kubernetes versions v1.36-1.32
+* Tested with Kind v0.32.0
+* Tested with Bats v1.13.0
+* build(deps): Bump actions/setup-go from 6.0.0 to 6.4.0 in the github-actions-backward-compatible group: [#1159](https://github.com/hashicorp/vault-helm/pull/1159)
+* build(deps): Bump actions/checkout from 5.0.1 to 6.0.2 in the github-actions-breaking group: [#1182](https://github.com/hashicorp/vault-helm/pull/1182)
+* Dependency update for actions/checkout from 6.0.2 to 6.0.3. Cherry-picked from [#1187](https://github.com/hashicorp/vault-helm/pull/1187)
+
+Features:
+
+* Add Vault Enterprise redundancy zones support (requires Kubernetes 1.35+) [#1170](https://github.com/hashicorp/vault-helm/pull/1170)
 
 ## 0.32.0 (January 14, 2026)
 

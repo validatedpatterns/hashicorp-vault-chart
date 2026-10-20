@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.32.0](https://img.shields.io/badge/Version-0.32.0-informational?style=flat-square) ![AppVersion: 1.21.2](https://img.shields.io/badge/AppVersion-1.21.2-informational?style=flat-square)
+![Version: 0.34.1](https://img.shields.io/badge/Version-0.34.1-informational?style=flat-square) ![AppVersion: 2.0.4](https://img.shields.io/badge/AppVersion-2.0.4-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -25,7 +25,7 @@ Kubernetes: `>= 1.20.0-0`
 | csi.agent.extraArgs | list | `[]` |  |
 | csi.agent.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.agent.image.repository | string | `"hashicorp/vault"` |  |
-| csi.agent.image.tag | string | `"1.21.2"` |  |
+| csi.agent.image.tag | string | `"2.0.4"` |  |
 | csi.agent.logFormat | string | `"standard"` |  |
 | csi.agent.logLevel | string | `"info"` |  |
 | csi.agent.resources | object | `{}` |  |
@@ -50,7 +50,7 @@ Kubernetes: `>= 1.20.0-0`
 | csi.hostNetwork | bool | `false` |  |
 | csi.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.image.repository | string | `"hashicorp/vault-csi-provider"` |  |
-| csi.image.tag | string | `"1.7.0"` |  |
+| csi.image.tag | string | `"1.7.4"` |  |
 | csi.livenessProbe.failureThreshold | int | `2` |  |
 | csi.livenessProbe.initialDelaySeconds | int | `5` |  |
 | csi.livenessProbe.periodSeconds | int | `5` |  |
@@ -91,7 +91,7 @@ Kubernetes: `>= 1.20.0-0`
 | injector.agentDefaults.templateConfig.exitOnRetryFailure | bool | `true` |  |
 | injector.agentDefaults.templateConfig.staticSecretRenderInterval | string | `""` |  |
 | injector.agentImage.repository | string | `"hashicorp/vault"` |  |
-| injector.agentImage.tag | string | `"1.21.2"` |  |
+| injector.agentImage.tag | string | `"2.0.4"` |  |
 | injector.annotations | object | `{}` |  |
 | injector.authPath | string | `"auth/kubernetes"` |  |
 | injector.certs.caBundle | string | `""` |  |
@@ -106,7 +106,7 @@ Kubernetes: `>= 1.20.0-0`
 | injector.hostNetwork | bool | `false` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.image.repository | string | `"hashicorp/vault-k8s"` |  |
-| injector.image.tag | string | `"1.7.2"` |  |
+| injector.image.tag | string | `"1.7.6"` |  |
 | injector.leaderElector.enabled | bool | `true` |  |
 | injector.livenessProbe.failureThreshold | int | `2` |  |
 | injector.livenessProbe.initialDelaySeconds | int | `5` |  |
@@ -185,15 +185,26 @@ Kubernetes: `>= 1.20.0-0`
 | server.ha.disruptionBudget.enabled | bool | `true` |  |
 | server.ha.disruptionBudget.maxUnavailable | string | `nil` |  |
 | server.ha.enabled | bool | `false` |  |
-| server.ha.raft.config | string | `"ui = true\n\nlistener \"tcp\" {\n  tls_disable = 1\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n  # Enable unauthenticated metrics access (necessary for Prometheus Operator)\n  #telemetry {\n  #  unauthenticated_metrics_access = \"true\"\n  #}\n}\n\nstorage \"raft\" {\n  path = \"/vault/data\"\n}\n\nservice_registration \"kubernetes\" {}\n"` |  |
+| server.ha.raft.config | string | `"ui = true\n\nlistener \"tcp\" {\n  tls_disable = 1\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n  # Enable unauthenticated metrics access (necessary for Prometheus Operator)\n  #telemetry {\n  #  unauthenticated_metrics_access = \"true\"\n  #}\n}\n\nstorage \"raft\" {\n  path = \"/vault/data\"\n  # Uncomment for Vault Enterprise redundancy zones (requires server.ha.raft.redundancyZones.enabled = true)\n  # autopilot_redundancy_zone = \"VAULT_REDUNDANCY_ZONE\"\n}\n\nservice_registration \"kubernetes\" {}\n"` |  |
 | server.ha.raft.enabled | bool | `false` |  |
+| server.ha.raft.redundancyZones.enabled | bool | `false` |  |
 | server.ha.raft.setNodeId | bool | `false` |  |
 | server.ha.replicas | int | `3` |  |
 | server.hostAliases | list | `[]` |  |
 | server.hostNetwork | bool | `false` |  |
+| server.httproute.activeService | bool | `true` |  |
+| server.httproute.additionalRules | list | `[]` |  |
+| server.httproute.annotations | object | `{}` |  |
+| server.httproute.enabled | bool | `false` |  |
+| server.httproute.filters | list | `[]` |  |
+| server.httproute.hostnames | list | `[]` |  |
+| server.httproute.labels | object | `{}` |  |
+| server.httproute.matches[0].path.type | string | `"PathPrefix"` |  |
+| server.httproute.matches[0].path.value | string | `"/"` |  |
+| server.httproute.parentRefs | list | `[]` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.image.repository | string | `"hashicorp/vault"` |  |
-| server.image.tag | string | `"1.21.2"` |  |
+| server.image.tag | string | `"2.0.4"` |  |
 | server.includeConfigAnnotation | bool | `false` |  |
 | server.ingress.activeService | bool | `true` |  |
 | server.ingress.annotations | object | `{}` |  |

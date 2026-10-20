@@ -1,6 +1,6 @@
 # hashicorp-vault
 
-![Version: 0.1.10](https://img.shields.io/badge/Version-0.1.10-informational?style=flat-square)
+![Version: 0.1.11](https://img.shields.io/badge/Version-0.1.11-informational?style=flat-square)
 
 A Helm chart to configure Hashicorp's vault.
 
@@ -18,7 +18,7 @@ This chart is used by the Validated Patterns installation script that can be fou
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://charts/vault | vault | 0.32.0 |
+| file://charts/vault | vault | 0.34.1 |
 
 ## Values
 
@@ -33,7 +33,7 @@ This chart is used by the Validated Patterns installation script that can be fou
 | vault.server.extraEnvironmentVars | object | `{"VAULT_ADDR":"https://vault.vault.svc.cluster.local:8200","VAULT_CACERT":"/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"}` | Additional environment variables injected in the vault pod |
 | vault.server.extraVolumes | list | `[{"name":"vault-secret","type":"secret"}]` | Extra volumes that are automatically mounted in the vault pod under /vault/userconfig/<name> |
 | vault.server.image.repository | string | `"registry.connect.redhat.com/hashicorp/vault"` | Where to fetch the vault images from |
-| vault.server.image.tag | string | `"1.21.4-ubi"` | Tag to use for the vault image |
+| vault.server.image.tag | string | `"2.1.2-ubi"` | Tag to use for the vault image |
 | vault.server.route.enabled | bool | `true` | Enable route support when exposing the vault |
 | vault.server.route.tls.termination | string | `"reencrypt"` | Termination type of the vault route |
 | vault.server.service.enabled | bool | `true` | Enables an associated k8s service when running the vault |
@@ -112,7 +112,7 @@ chart values.
 ### Per-Service Annotation Issue
 
 In order to be able to use vault SSL we need to patch the helm chart to fix
-upstream issue 674 (which was only fixeed partially). Basically a single
+upstream issue 674 (which was only fixed partially). Basically a single
 annotation for both internal service and non-internal service is a problem
 because the annotations in the service section are applied to both the vault
 and the vault-internal services and there is not way to distinguish between the

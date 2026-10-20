@@ -74,4 +74,7 @@ vault:
       # -- Where to fetch the vault images from
       repository: "registry.connect.redhat.com/hashicorp/vault"
       # -- Tag to use for the vault image
-      tag: "1.21.4-ubi"
+      tag: "2.1.2-ubi"
+      #tag: "1.21.4-ubi"
+    # https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+    updateStrategyType: "RollingUpdate"
